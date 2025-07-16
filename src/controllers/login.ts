@@ -1,16 +1,26 @@
 import {Request,Response} from "express"
-import userModel from "../models/users.js"
+import userModel from "../models/users.db.js"
+import {User} from "../types/user.type..js"
+import jwt from 'jsonwebtoken';
 
-export const loginHandler =async (req:Request,res:Response)=>{
+
+export interface LoginUser extends User{
+    
+}
+const JSON_PASSWORD ="12345"
+
+export const loginHandler =async (req:Request<{},{},LoginUser>,res:Response)=>{
     try{
 
-        const {name} = req.body
-        const user= await userModel.findOne({name:name})
+        const {username,password} = req.body
+        const user= await userModel.findOne({username:username})
         if(!user){
            res.status(404).send({"message" : "user not found"})
            return ;
         }
-        res.status(200).send("login successful")
+        
+        const token = jwt.sign({id:user._id},JSON_PASSWORD)
+        res.status(200).json({token})
         return ;
     }catch(error){
          res.status(500).send("internal server error")

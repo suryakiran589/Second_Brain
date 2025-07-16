@@ -1,10 +1,9 @@
 import mongoose, { Schema,Document,Model } from "mongoose";
+// import { LoginUser } from "../controllers/login.js";
+import { User } from "../types/user.type..js";
 
-
-export interface IUser extends Document {
-    name:string,
-    email:string,
-    age?:number
+export interface IUser extends User,Document {
+    
 }
 
 const UserSchema = new Schema<IUser>(
@@ -17,6 +16,15 @@ const UserSchema = new Schema<IUser>(
       type: String,
       required: true,
       unique: true,
+    },
+    username:{
+      type:String,
+      required:true,
+      unique:true
+    },
+    password:{
+      type:String,
+      required:true
     },
     age: {
       type: Number,
