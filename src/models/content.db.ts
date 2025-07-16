@@ -11,3 +11,6 @@ const contentSchema = new Schema({
     // tags:[{type:mongoose.Types.ObjectId,ref:Tag}],
     userId:{type:mongoose.Types.ObjectId,ref:"User"}   
 })
+
+const contentModel = mongoose.model("Content",contentSchema)
+export default contentModel
