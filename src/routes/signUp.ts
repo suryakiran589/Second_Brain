@@ -1,7 +1,10 @@
+import bcrypt from "bcrypt";
 import express,{Request,Response} from "express"
 const router = express.Router()
 import userModel from "../models/users.db.js"
-import { User } from "../types/user.type..js" 
+import { User } from "../types/user.type.js" 
+import jwt from 'jsonwebtoken';
+import { JSON_PASSWORD } from "../utils/constants.js";
 
 
 // router.get("/",async (req:Request,res:Response) => {
@@ -11,17 +14,29 @@ import { User } from "../types/user.type..js"
 
 router.post("/",async (req:Request<{},{},User>,res:Response) => {
   // console.log(req.body)
+  
+  try{
   const name = req.body.name
   const email= req.body.email
   const username= req.body.username
   const password =req.body.password
+  
+  const saltRounds = 10; // security level
+  
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  
   const user =  await userModel.create<User>({name:name,
     email:email,
     username:username,
-    password:password,
+    password:hashedPassword,
   });
-  console.log(user)
-  res.json(req.body)
+
+  const token = jwt.sign({id:user._id},JSON_PASSWORD)
+    res.status(200).json({msg:"user created successfully",token})
+  }catch(error){
+    res.status(500).json(error)
+
+  }
 })
 
 router.put("/",async (req:Request,res:Response) =>{

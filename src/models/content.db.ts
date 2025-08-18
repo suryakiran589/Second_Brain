@@ -8,6 +8,12 @@ const contentSchema = new Schema({
         type:String
     },
     link:String,
+    description:{
+        type:String},
+    createdAt:{
+        type:Date,
+        default:Date.now(),
+    },
     // tags:[{type:mongoose.Types.ObjectId,ref:Tag}],
     userId:{type:mongoose.Types.ObjectId,ref:"User"}   
 })

@@ -3,5 +3,7 @@
 export interface content{
     title:string,
     link:string,
-    userId:string
+    userId:string,
+    description:string,
+    createdAt:string
 }

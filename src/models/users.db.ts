@@ -1,6 +1,6 @@
 import mongoose, { Schema,Document,Model } from "mongoose";
 // import { LoginUser } from "../controllers/login.js";
-import { User } from "../types/user.type..js";
+import { User } from "../types/user.type.js";
 
 export interface IUser extends User,Document {
     
