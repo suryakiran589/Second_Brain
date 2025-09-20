@@ -10,6 +10,7 @@ const contentSchema = new Schema({
     link:String,
     description:{
         type:String},
+    category:String,
     createdAt:{
         type:Date,
         default:Date.now(),

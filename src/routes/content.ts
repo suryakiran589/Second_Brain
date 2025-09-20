@@ -10,6 +10,8 @@ router.post("/",userMiddleware,async (req:Request<{},{},content>,res)=>{
     const title = req.body.title
     const description =req.body.description
     const createdAt =req.body.createdAt
+    const category = req.body.category
+    
     const userId = req.userId
        const link = req.body.link
        //@ts-ignore
@@ -18,6 +20,7 @@ router.post("/",userMiddleware,async (req:Request<{},{},content>,res)=>{
            link:link,
            userId:userId,
            description:description ,
+           category:category,
            createdAt:createdAt
         })
         
@@ -49,6 +52,12 @@ router.put("/:id",userMiddleware,async (req,res)=>{
     const description = req.body.description
     await contentModel.updateOne({_id:id},{$set:{title:title,link:link,description:description}})
     
+})
+
+router.get("/brains/:id",async (req,res) =>{
+    const {id} = req.params
+    const data= await contentModel.findOne({_id:id})
+    res.json({data})
 })
 
 export default router

@@ -5,5 +5,6 @@ export interface content{
     link:string,
     userId:string,
     description:string,
-    createdAt:string
+    createdAt:string,
+    category:string
 }
