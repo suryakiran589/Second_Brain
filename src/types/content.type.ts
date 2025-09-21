@@ -6,5 +6,6 @@ export interface content{
     userId:string,
     description:string,
     createdAt:string,
-    category:string
+    category:string,
+    shareLink:string
 }

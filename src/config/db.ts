@@ -2,8 +2,9 @@ import mongoose from "mongoose";
 
 const connectDB = async () =>{
     try{
+        const mongo_url:string = process.env.MONGO_URI || ""
 
-        await mongoose.connect('mongodb://127.0.0.1:27017/Second-brain')
+        await mongoose.connect(mongo_url)
         console.log('success')
     }
     catch(error){

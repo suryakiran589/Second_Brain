@@ -1,5 +1,6 @@
 import express,{Request} from "express";
 const router = express.Router()
+import crypto from "crypto";
 import { content } from "../types/content.type";
 import contentModel from "../models/content.db.js";
 import userMiddleware from "../middlewares/userMiddleware.js";
@@ -57,8 +58,43 @@ router.put("/:id",userMiddleware,async (req,res)=>{
 router.get("/brains/:id",async (req,res) =>{
     const {id} = req.params
     const data= await contentModel.findOne({_id:id})
+
     res.json({data})
 })
+router.post("/brain/share",userMiddleware, async (req:any, res:any) => {
+  const { share,id } = req.body;
+  
+  const brain = await contentModel.findOne({_id:id});
+
+  if (!brain) return res.status(404).send("Brain not found");
+
+  if (share) {
+    //@ts-ignore
+    brain.shareLink =  crypto.randomBytes(6).toString("hex") 
+  } else {
+    //@ts-ignore
+    brain.shareLink = "";
+  }
+  //@ts-ignore
+  await brain.save();
+  //@ts-ignore
+  res.send({ hash: brain.shareLink });
+});
+
+router.get("/brain/public/:hash", async (req:any, res:any) => {
+  const { hash } = req.params;
+  const brain = await contentModel.findOne({ shareLink: hash });
+
+  if (!brain) return res.status(404).send("Brain not found");
+
+  // Send only public info
+  res.send({
+    title: brain.title,
+    description: brain.description,
+    link: brain.link,
+    category: brain.category,
+  });
+});
 
 export default router
 
