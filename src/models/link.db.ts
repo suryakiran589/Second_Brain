@@ -1,5 +1,5 @@
 import mongoose, { Schema ,model} from "mongoose";
-import userModel from "./users.db";
+import userModel from "./users.db.js";
 
 const linkSchema = new Schema({
     userId:{type:mongoose.Types.ObjectId ,ref:"User"},

@@ -1,7 +1,7 @@
 import express,{Request} from "express";
 const router = express.Router()
 import crypto from "crypto";
-import { content } from "../types/content.type";
+import { content } from "../types/content.type.js";
 import contentModel from "../models/content.db.js";
 import userMiddleware from "../middlewares/userMiddleware.js";
 

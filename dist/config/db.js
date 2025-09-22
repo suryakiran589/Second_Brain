@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 const connectDB = async () => {
     try {
-        await mongoose.connect('mongodb://127.0.0.1:27017/Second-brain');
+        const mongo_url = process.env.MONGO_URI;
+        if (!mongo_url) {
+            throw new Error("MONGO_URI is not defined in environment variables");
+        }
+        await mongoose.connect(mongo_url);
         console.log('success');
     }
     catch (error) {
