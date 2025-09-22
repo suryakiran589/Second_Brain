@@ -15,6 +15,8 @@ app.use(express.json());
 dotenv.config()
 await connectDB()
 
+    const PORT = Number(process.env.PORT) || 3000
+
 app.use("/api/v1/signup",signUpRouter)
 app.use("/api/v1/signin",signInRouter)
 app.use("/api/v1/content",contentRouter)
@@ -23,6 +25,6 @@ app.use("/api/v1/",linkRouter)
 app.get("/api/v1/",(req,res)=>{
     res.json({"msg":"success"})
 })
-app.listen(process.env.PORT,() =>{
+app.listen(PORT,"0.0.0.0",() =>{
     console.log("server running at port 3000")
 })  
